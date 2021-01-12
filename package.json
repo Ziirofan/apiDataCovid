@@ -1,0 +1,39 @@
+{
+  "name": "apidatacovid",
+  "version": "0.0.1",
+  "description": "Serving data about covid statistics",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "npx mocha test/*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ziirofan/apiDataCovid.git"
+  },
+  "keywords": [
+    "covid",
+    "api"
+  ],
+  "author": "Matthieu Viera Santa Cruz (Ziirofan)",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Ziirofan/apiDataCovid/issues"
+  },
+  "homepage": "https://github.com/Ziirofan/apiDataCovid#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mysql": "^2.18.1",
+    "node-cache": "^5.1.2"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^8.2.1",
+    "mocha-junit-reporter": "^2.0.0",
+    "nyx": "^0.1.0"
+  }
+}
