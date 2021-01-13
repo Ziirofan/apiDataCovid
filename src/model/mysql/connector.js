@@ -7,14 +7,14 @@ module.exports = class dbConnect{
     }
     async createPool(){
         try{
-            this.pool = mysql.createPool({
+            this.pool = await mysql.createPool({
                 connectionLimit: this.config.mysql.connectionLimit,
                 host: this.config.mysql.host,
                 user: this.config.mysql.username,
                 password: this.config.mysql.password,
                 database: this.config.mysql.db
             })
-            this.pool.getConnection((e, co)=>{
+            this.pool.getConnection((err, co)=>{
                 if(err) throw err;
                 co.release();
             })
@@ -27,5 +27,19 @@ module.exports = class dbConnect{
             }
             throw e;
         }  
+    }
+    /**
+     * @todo Rewrite in async/await (solution not found)
+     * @param {String} query 
+     * @param {String | Array} param 
+     */
+    query(query, param){
+        return new Promise((result, reject)=>{
+            let sql = mysql.format(query, param)
+            this.pool.query(sql, (error, results, fields)=>{
+                if(error) reject(error);
+                result(results);
+            })
+        })
     }
 }

@@ -5,9 +5,19 @@ module.exports = class Query{
         this.connector = new Connect();
         this.init();
     }
-    async init(){
+    init(){
+        this.connector.createPool()
+        .then(_=>{
+            this.pool = this.connector.pool;
+        })
+        .catch(e =>{
+            return e;
+        })     
+    }
+    async execQuery(query, param){
         try{
-            this.pool = await this.connector.createPool()
+            let resultDb = await this.connector.query(query, param)
+            return resultDb
         }
         catch(e){
             if(process.env.DEBUG){
@@ -15,5 +25,19 @@ module.exports = class Query{
             }
             throw e;
         }
+    }
+    async getDataByMailleCode(MailleCode){
+        try{
+            let resultDb = await this.execQuery("SELECT * FROM cov19_donnees WHERE `maille_code`= ? ORDER BY date DESC", MailleCode)
+            console.log(resultDb)
+            return resultDb;
+        }
+        catch(e){
+            if(process.env.DEBUG){
+                console.error(e)
+            }
+            throw e;
+        }
+        
     }
 }

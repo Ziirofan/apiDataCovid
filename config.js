@@ -1,7 +1,7 @@
 module.exports = {
     mysql:{
-        username:"covid",
-        password:"covid",
+        username:"ziirofan",
+        password:"ziirofan",
         host:"localhost",
         port:"3306",
         connectionLimit: 10,
