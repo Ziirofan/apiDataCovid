@@ -4,10 +4,10 @@ const expect = chai.expect;
 const baseUrl = "http://127.0.0.1:3000"
 chai.use(chaiHttp);
 
-describe("région user", ()=>{
-    it('get Data From Area (idf)', (done)=>{
+describe("région today user", ()=>{
+    it('get Data From Area (idf) today', (done)=>{
         chai.request(baseUrl)
-        .get('/getAreaData')
+        .get('/getAreaDataToday')
         .query({code: "REG-11"})
         .end((err, res)=>{
             //console.log(res)
@@ -19,11 +19,11 @@ describe("région user", ()=>{
     })
 })
 
-describe("département user", ()=>{
-    it('get Data From Area (idf)', (done)=>{
+describe("région weekly user", ()=>{
+    it('get Data From Area (idf) weekly', (done)=>{
         chai.request(baseUrl)
-        .get('/getAreaData')
-        .query({code: "DEP-11"})
+        .get('/getAreaDataWeekly')
+        .query({code: "REG-11"})
         .end((err, res)=>{
             //console.log(res)
             expect(err).to.be.null;
@@ -34,11 +34,11 @@ describe("département user", ()=>{
     })
 })
 
-describe("national user", ()=>{
-    it('get Data From NAT (idf)', (done)=>{
+describe("région data at specific date", ()=>{
+    it('get data from région(idf) at spécific date', (done)=>{
         chai.request(baseUrl)
-        .get('/getAreaData')
-        .query({code: "FRA"})
+        .get('/getAreaDataOnDate')
+        .query({code: "REG-11", date:"2021-01-01"})
         .end((err, res)=>{
             //console.log(res)
             expect(err).to.be.null;
@@ -49,11 +49,11 @@ describe("national user", ()=>{
     })
 })
 
-describe("grnularite", ()=>{
-    it('get code', (done)=>{
+describe("région data between two date", ()=>{
+    it('get data from région(idf) beetwen two date', (done)=>{
         chai.request(baseUrl)
-        .get('/getGran')
-        .query()
+        .get('/getAreaDataBetweenDate')
+        .query({code: "REG-11", dateStart:"2020-12-01", dateEnd:"2021-01-01"})
         .end((err, res)=>{
             //console.log(res)
             expect(err).to.be.null;
@@ -63,6 +63,3 @@ describe("grnularite", ()=>{
         })
     })
 })
-
-
-

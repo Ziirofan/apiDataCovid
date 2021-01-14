@@ -7,7 +7,11 @@ module.exports = class CovidDataRoute{
     }
     init(){
         this.getAreaData()
-        this.getNatData()
+        this.getAreaDataToday();
+        this.getAreaDataWeekly();
+        this.getAreaDataOnDate();
+        this.getAreaDataBetweenDate();
+        this.getGran();
     }
     runAsyncWrapper (callback) {
         return function (req, res, next) {
@@ -16,32 +20,58 @@ module.exports = class CovidDataRoute{
         }
     }
 
-    getAreaData(){
-        this.app.get("/getAreaData", this.runAsyncWrapper(async (req, res)=>{
-            let resultDB;
-            if(req.query.hasOwnProperty("region")){
-                resultDB = await this.covDataController.queryAreaData(req.query.region)
-            }
-            else if(req.query.hasOwnProperty("departement")){
-                resultDB = await this.covDataController.queryAreaData(req.query.departement)
-            }
-            else{
-                throw createError(400, `area '${req.query.region}' not found`)
-            }
+    getGran(){
+        this.app.get("/getGran", this.runAsyncWrapper(async (req, res)=>{
+            let resultDB = await this.covDataController.queryGran()
             
             if(resultDB.length === 0)
                 throw createError(400, `Region '${req.query.region}' not found`)
             return res.status(200).json(resultDB);
         }))
     }
-    getNatData(){
-        this.app.get("/getNatData", this.runAsyncWrapper(async (req, res)=>{
-            let resultDB = await this.covDataController.queryAreaData("FRA")
+    getAreaData(){
+        this.app.get("/getAreaData", this.runAsyncWrapper(async (req, res)=>{
+            let resultDB = await this.covDataController.queryAreaData(req.query.code)
+            
             if(resultDB.length === 0)
                 throw createError(400, `Region '${req.query.region}' not found`)
             return res.status(200).json(resultDB);
         }))
     }
+    getAreaDataToday(){
+        this.app.get("/getAreaDataToday", this.runAsyncWrapper(async (req, res)=>{
+            let resultDB = await this.covDataController.queryAreaDataToday(req.query.code)
+            
+            if(resultDB.length === 0)
+                throw createError(400, `Region '${req.query.region}' not found`)
+            return res.status(200).json(resultDB);
+        }))
+    }
+    getAreaDataWeekly(){
+        this.app.get("/getAreaDataWeekly", this.runAsyncWrapper(async (req, res)=>{
+            let resultDB = await this.covDataController.queryAreaDataWeekly(req.query.code)
+            if(resultDB.length === 0)
+                throw createError(400, `Region '${req.query.region}' not found`)
+            return res.status(200).json(resultDB);
+        }))
+    }
+    getAreaDataOnDate(){
+        this.app.get("/getAreaDataOnDate", this.runAsyncWrapper(async (req, res)=>{
+            let resultDB = await this.covDataController.queryAreaDataOnDate(req.query.code, req.query.date)
+            if(resultDB.length === 0)
+                throw createError(400, `Region '${req.query.region}' not found`)
+            return res.status(200).json(resultDB);
+        }))
+    }
+    getAreaDataBetweenDate(){
+        this.app.get("/getAreaDataBetweenDate", this.runAsyncWrapper(async (req, res)=>{
+            let resultDB = await this.covDataController.queryAreaDataBetweenDate(req.query.code, req.query.dateStart, req.query.dateEnd)
+            if(resultDB.length === 0)
+                throw createError(400, `Region '${req.query.region}' not found`)
+            return res.status(200).json(resultDB);
+        }))
+    }
+
     /*getRegionData(){
         this.app.get("/getRegionData", (req, res)=>{
             this.covDataController.queryRegionData(req.query.region)
