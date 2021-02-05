@@ -1,22 +1,19 @@
 module.exports = {
     mysql:{
-        username:"ziirofan",
-        password:"ziirofan",
-        host:"localhost",
-        port:"3306",
+        username: process.env.MYSQL_USERNAME,
+        password: process.env.MYSQL_PASS,
+        host: process.env.MYSQL_HOST,
+        port: process.env.MYSQL_PORT,
         connectionLimit: 10,
-        db:"covid"
+        db:process.env.MYSQL_DB
     },
     server:{
-        port:3000,
-        host:"127.0.0.1"
+        port:process.env.SERVER_PORT,
+        host:process.env.SERVER_HOST,
+        endpoint:process.env.SERVER_ENDPOINT
     },
     api:{
         address_json:"https://raw.githubusercontent.com/opencovid19-fr/data/master/dist/chiffres-cles.json",
         address_csv:"https://raw.githubusercontent.com/opencovid19-fr/data/master/dist/chiffres-cles.csv"
-    },
-    debug:{
-        debug: true,
-        node_env: "developement"
     }
 }

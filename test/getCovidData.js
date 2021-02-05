@@ -1,7 +1,7 @@
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 const expect = chai.expect;
-const baseUrl = "http://127.0.0.1:3000"
+const baseUrl = "http://api.ziirofan.info/apiDataCovid"//"http://127.0.0.1:3000"
 chai.use(chaiHttp);
 
 describe("région user", ()=>{
@@ -10,7 +10,7 @@ describe("région user", ()=>{
         .get('/getAreaData')
         .query({code: "REG-11"})
         .end((err, res)=>{
-            //console.log(res)
+            //console.log(res, err)
             expect(err).to.be.null;
             expect(res).to.have.status(200);
             expect(res).to.be.json;

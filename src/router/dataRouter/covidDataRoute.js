@@ -1,4 +1,5 @@
 const createError = require('http-errors')
+const config = JSON.parse(process.env.APP_CONFIG)
 
 module.exports = class CovidDataRoute{
     constructor(covDataController, app){
@@ -21,7 +22,7 @@ module.exports = class CovidDataRoute{
     }
 
     getGran(){
-        this.app.get("/getGran", this.runAsyncWrapper(async (req, res)=>{
+        this.app.get(config.server.endpoint+"/getGran", this.runAsyncWrapper(async (req, res)=>{
             let resultDB = await this.covDataController.queryGran()
             
             if(resultDB.length === 0)
@@ -30,7 +31,7 @@ module.exports = class CovidDataRoute{
         }))
     }
     getAreaData(){
-        this.app.get("/getAreaData", this.runAsyncWrapper(async (req, res)=>{
+        this.app.get(config.server.endpoint+"/getAreaData", this.runAsyncWrapper(async (req, res)=>{
             let resultDB = await this.covDataController.queryAreaData(req.query.code)
             
             if(resultDB.length === 0)
@@ -39,7 +40,7 @@ module.exports = class CovidDataRoute{
         }))
     }
     getAreaDataToday(){
-        this.app.get("/getAreaDataToday", this.runAsyncWrapper(async (req, res)=>{
+        this.app.get(config.server.endpoint+"/getAreaDataToday", this.runAsyncWrapper(async (req, res)=>{
             let resultDB = await this.covDataController.queryAreaDataToday(req.query.code)
             
             if(resultDB.length === 0)
@@ -48,7 +49,7 @@ module.exports = class CovidDataRoute{
         }))
     }
     getAreaDataWeekly(){
-        this.app.get("/getAreaDataWeekly", this.runAsyncWrapper(async (req, res)=>{
+        this.app.get(config.server.endpoint+"/getAreaDataWeekly", this.runAsyncWrapper(async (req, res)=>{
             let resultDB = await this.covDataController.queryAreaDataWeekly(req.query.code)
             if(resultDB.length === 0)
                 throw createError(400, `Region '${req.query.region}' not found`)
@@ -56,7 +57,7 @@ module.exports = class CovidDataRoute{
         }))
     }
     getAreaDataOnDate(){
-        this.app.get("/getAreaDataOnDate", this.runAsyncWrapper(async (req, res)=>{
+        this.app.get(config.server.endpoint+"/getAreaDataOnDate", this.runAsyncWrapper(async (req, res)=>{
             let resultDB = await this.covDataController.queryAreaDataOnDate(req.query.code, req.query.date)
             if(resultDB.length === 0)
                 throw createError(400, `Region '${req.query.region}' not found`)
@@ -64,7 +65,7 @@ module.exports = class CovidDataRoute{
         }))
     }
     getAreaDataBetweenDate(){
-        this.app.get("/getAreaDataBetweenDate", this.runAsyncWrapper(async (req, res)=>{
+        this.app.get(config.server.endpoint+"/getAreaDataBetweenDate", this.runAsyncWrapper(async (req, res)=>{
             let resultDB = await this.covDataController.queryAreaDataBetweenDate(req.query.code, req.query.dateStart, req.query.dateEnd)
             if(resultDB.length === 0)
                 throw createError(400, `Region '${req.query.region}' not found`)

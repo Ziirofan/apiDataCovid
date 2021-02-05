@@ -4,6 +4,8 @@
  * @author Matthieu Viera Santa Cruz (Ziirofan)
  */
 
+require("dotenv").config()
+
 const config = require("./config");
 process.env.APP_CONFIG = JSON.stringify(config);
 
@@ -14,10 +16,6 @@ const cookieParser = require('cookie-parser');
 const app = express();
 const Router = require('./src/router/MainRouter')
 const createError = require('http-errors')
-
-process.env.DEBUG = config.debug.debug;
-process.env.NODE_ENV = config.debug.node_env;
-
 
 
 function main(){
